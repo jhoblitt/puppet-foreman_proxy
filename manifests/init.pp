@@ -225,9 +225,10 @@ class foreman_proxy (
   validate_bool($bmc)
   validate_re($bmc_default_provider, '^(freeipmi|ipmitool|shell)$')
 
+  anchor { 'foreman_proxy::begin': } ->
   class { 'foreman_proxy::install': } ~>
   class { 'foreman_proxy::config': } ~>
   class { 'foreman_proxy::service': } ~>
   class { 'foreman_proxy::register': } ->
-  Class['foreman_proxy']
+  anchor { 'foreman_proxy::end': }
 }
